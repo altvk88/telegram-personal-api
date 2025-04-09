@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  telegram-api:
+    build: .
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+      - telegram-sessions:/app/sessions
+    environment:
+      - API_ID=24010738
+      - API_HASH=4760fca1c08d7aa88e7e974cb77e11a1
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=changeThisPassword
+      - SESSION_NAME=telegram_user_session
+
+volumes:
+  telegram-sessions:
