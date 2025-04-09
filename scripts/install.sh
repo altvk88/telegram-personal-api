@@ -13,20 +13,41 @@ echo "Начинаем установку Telegram User API..."
 # Обновление пакетов
 echo "Обновление пакетов..."
 apt-get update
-apt-get upgrade -y
 
 # Установка необходимых пакетов
 echo "Установка необходимых пакетов..."
-apt-get install -y git docker.io docker-compose curl nginx certbot python3-certbot-nginx
+apt-get install -y git curl nginx certbot python3-certbot-nginx
 
-# Настройка директории
-echo "Настройка директорий..."
-mkdir -p /opt/telegram-user-api
-cd /opt/telegram-user-api
+# Проверка наличия Docker
+echo "Проверка Docker..."
+if ! command -v docker &> /dev/null; then
+    echo "Docker не установлен. Устанавливаем Docker..."
+    # Используйте официальный способ установки Docker
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+    rm get-docker.sh
+else
+    echo "Docker уже установлен."
+fi
 
-# Копирование .env.example в .env
+# Проверка наличия Docker Compose
+if ! command -v docker-compose &> /dev/null; then
+    echo "Docker Compose не установлен. Устанавливаем Docker Compose..."
+    curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
+else
+    echo "Docker Compose уже установлен."
+fi
+
+# Настройка переменных окружения
 echo "Настройка переменных окружения..."
-cp .env.example .env
+if [ -f .env.example ]; then
+    cp .env.example .env
+    echo "Файл .env создан из .env.example"
+else
+    echo "ВНИМАНИЕ: Файл .env.example не найден. Проверьте, что вы находитесь в корневой директории проекта."
+    exit 1
+fi
 
 # Предлагаем изменить пароль
 echo "Рекомендуется изменить пароль администратора в файле .env"
@@ -43,16 +64,21 @@ fi
 
 # Настройка Nginx
 echo "Настройка Nginx..."
-cp nginx/tg-api.itpovar.ru.conf /etc/nginx/sites-available/
-ln -sf /etc/nginx/sites-available/tg-api.itpovar.ru.conf /etc/nginx/sites-enabled/
-nginx -t
+if [ -f nginx/tg-api.itpovar.ru.conf ]; then
+    cp nginx/tg-api.itpovar.ru.conf /etc/nginx/sites-available/
+    ln -sf /etc/nginx/sites-available/tg-api.itpovar.ru.conf /etc/nginx/sites-enabled/
+    nginx -t
 
-if [ $? -ne 0 ]; then
-    echo "Ошибка в конфигурации Nginx. Исправьте ошибки и перезапустите скрипт."
+    if [ $? -ne 0 ]; then
+        echo "Ошибка в конфигурации Nginx. Исправьте ошибки и перезапустите скрипт."
+        exit 1
+    fi
+
+    systemctl restart nginx
+else
+    echo "ВНИМАНИЕ: Файл nginx/tg-api.itpovar.ru.conf не найден. Проверьте, что вы находитесь в корневой директории проекта."
     exit 1
 fi
-
-systemctl restart nginx
 
 # Настройка SSL
 echo "Хотите настроить SSL для домена tg-api.itpovar.ru? (y/n)"
