@@ -1,0 +1,96 @@
+{
+  "name": "Telegram Personal API",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      },
+      "id": "6dde7bfb-9c54-423c-a86a-8c5f082e16bd",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "message": "=Текущее время: {{new Date().toLocaleString()}}",
+        "recipient": "@username"
+      },
+      "id": "31a5b0df-9e4d-4f4f-9cb2-0338e189afa1",
+      "name": "Set Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://tg-api.itpovar.ru/send/text",
+        "authentication": "basicAuth",
+        "username": "admin",
+        "password": "changeThisPassword",
+        "method": "POST",
+        "jsonParameters": true,
+        "options": {},
+        "bodyParametersJson": "={\n  \"recipient\": \"{{$node[\"Set Message\"].json[\"recipient\"]}}\",\n  \"text\": \"{{$node[\"Set Message\"].json[\"message\"]}}\"\n}"
+      },
+      "id": "a90a8b3e-a877-4073-a1ca-65c5ff4cb6e7",
+      "name": "Send Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        740,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Message": {
+      "main": [
+        [
+          {
+            "node": "Send Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "f65b34f5-d3bb-4ed7-bb3a-c9ee2af0c0b9",
+  "id": "1",
+  "meta": {
+    "instanceId": "example"
+  },
+  "tags": [
+    {
+      "name": "Telegram",
+      "color": "#158a15"
+    }
+  ]
+}
