@@ -3,7 +3,7 @@
 # Скрипт для подтверждения кода Telegram, когда код уже был запрошен
 
 # Настройки
-API_URL="https://tg-api.itpovar.ru"
+API_URL="https://tg.platva.ru"
 USERNAME="admin"
 
 # Запрашиваем пароль администратора
