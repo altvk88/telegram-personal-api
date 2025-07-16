@@ -76,7 +76,7 @@ if [ -f nginx/tg.platva.ru.conf ]; then
 
     systemctl restart nginx
 else
-    echo "ВНИМАНИЕ: Файл nginx/tg-api.itpovar.ru.conf не найден. Проверьте, что вы находитесь в корневой директории проекта."
+    echo "ВНИМАНИЕ: Файл nginx/tg.platva.ru.conf не найден. Проверьте, что вы находитесь в корневой директории проекта."
     exit 1
 fi
 
