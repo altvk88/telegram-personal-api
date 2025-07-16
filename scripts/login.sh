@@ -3,7 +3,7 @@
 # Скрипт для интерактивной авторизации в Telegram API
 
 # Настройки
-API_URL="https://tg-api.itpovar.ru"
+API_URL="https://tg.platva.ru"
 USERNAME="admin"
 
 # Запрашиваем пароль администратора
