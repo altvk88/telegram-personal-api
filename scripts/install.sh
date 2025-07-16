@@ -64,9 +64,9 @@ fi
 
 # Настройка Nginx
 echo "Настройка Nginx..."
-if [ -f nginx/tg-api.itpovar.ru.conf ]; then
-    cp nginx/tg-api.itpovar.ru.conf /etc/nginx/sites-available/
-    ln -sf /etc/nginx/sites-available/tg-api.itpovar.ru.conf /etc/nginx/sites-enabled/
+if [ -f nginx/tg.platva.ru.conf ]; then
+    cp nginx/tg.platva.ru.conf /etc/nginx/sites-available/
+    ln -sf /etc/nginx/sites-available/tg.platva.ru.conf /etc/nginx/sites-enabled/
     nginx -t
 
     if [ $? -ne 0 ]; then
@@ -81,11 +81,11 @@ else
 fi
 
 # Настройка SSL
-echo "Хотите настроить SSL для домена tg-api.itpovar.ru? (y/n)"
+echo "Хотите настроить SSL для домена tg.platva.ru? (y/n)"
 read setup_ssl
 
 if [ "$setup_ssl" == "y" ] || [ "$setup_ssl" == "Y" ]; then
-    certbot --nginx -d tg-api.itpovar.ru
+    certbot --nginx -d tg.platva.ru
     
     if [ $? -ne 0 ]; then
         echo "Ошибка при настройке SSL. Проверьте DNS и доступность домена."
@@ -100,17 +100,17 @@ echo "Запуск Docker контейнера..."
 docker-compose up -d --build
 
 echo "Установка завершена!"
-echo "API доступен по адресу: https://tg-api.itpovar.ru"
+echo "API доступен по адресу: https://tg.platva.ru"
 echo ""
 echo "Для авторизации в Telegram выполните следующие команды:"
 echo "1. Проверьте статус авторизации:"
-echo "   curl -u admin:$new_password https://tg-api.itpovar.ru/status"
+echo "   curl -u admin:$new_password https://tg.platva.ru/status"
 echo ""
 echo "2. Отправьте код на телефон (если не авторизованы):"
-echo "   curl -u admin:$new_password -X POST -H \"Content-Type: application/json\" -d '{\"phone\": \"+79XXXXXXXXX\"}' https://tg-api.itpovar.ru/login/send_code"
+echo "   curl -u admin:$new_password -X POST -H \"Content-Type: application/json\" -d '{\"phone\": \"+79XXXXXXXXX\"}' https://tg.platva.ru/login/send_code"
 echo ""
 echo "3. Введите код из SMS:"
 echo "   curl -u admin:$new_password -X POST -H \"Content-Type: application/json\" -d '{\"phone\": \"+79XXXXXXXXX\", \"code\": \"12345\", \"phone_code_hash\": \"hash_из_предыдущего_ответа\"}' https://tg-api.itpovar.ru/login/verify_code"
 echo ""
 echo "4. При необходимости введите пароль 2FA:"
-echo "   curl -u admin:$new_password -X POST -H \"Content-Type: application/json\" -d '{\"password\": \"ваш_пароль_2fa\"}' https://tg-api.itpovar.ru/login/2fa"
+echo "   curl -u admin:$new_password -X POST -H \"Content-Type: application/json\" -d '{\"password\": \"ваш_пароль_2fa\"}' https://tg.platva.ru/login/2fa"
