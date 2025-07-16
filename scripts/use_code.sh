@@ -4,10 +4,10 @@
 # Использует существующий phone_code_hash без запроса нового кода
 
 # Фиксированные данные
-API_URL="https://tg-api.itpovar.ru"
+API_URL="https://tg.platva.ru"
 USERNAME="admin"
 PASSWORD="changeThisPassword"
-PHONE="+79952997565"
+PHONE="+79652971313"
 PHONE_CODE_HASH="b2387c3327ba766c84"
 
 # Запрос кода подтверждения
