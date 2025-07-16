@@ -14,7 +14,7 @@ API для отправки сообщений через личный акка�
 
 ```bash
 # Клонируем репозиторий
-git clone https://github.com/CreatmanCEO/telegram-personal-api.git
+git clone https://github.com/altvk88/telegram-personal-api.git
 cd telegram-personal-api
 
 # Делаем скрипт установки исполняемым
@@ -36,7 +36,7 @@ sudo ./scripts/install.sh
 
 1. Клонируем репозиторий
 ```bash
-git clone https://github.com/CreatmanCEO/telegram-personal-api.git
+git clone [https://github.com/CreatmanCEO/telegram-personal-api.git](https://github.com/altvk88/telegram-personal-api.git)
 cd telegram-personal-api
 ```
 
@@ -53,15 +53,15 @@ docker-compose up -d
 
 4. Настраиваем Nginx
 ```bash
-sudo cp nginx/tg-api.itpovar.ru.conf /etc/nginx/sites-available/
-sudo ln -s /etc/nginx/sites-available/tg-api.itpovar.ru.conf /etc/nginx/sites-enabled/
+sudo cp nginx/tg.platva.ru.conf /etc/nginx/sites-available/
+sudo ln -s /etc/nginx/sites-available/tg.platva.ru.conf /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl restart nginx
 ```
 
 5. Настраиваем SSL (опционально)
 ```bash
-sudo certbot --nginx -d tg-api.itpovar.ru
+sudo certbot --nginx -d tg.platva.ru
 ```
 
 ## Авторизация в Telegram
@@ -70,7 +70,7 @@ sudo certbot --nginx -d tg-api.itpovar.ru
 
 1. Проверка статуса авторизации
 ```bash
-curl -u admin:ваш_пароль https://tg-api.itpovar.ru/status
+curl -u admin:ваш_пароль https://tg.platva.ru/status
 ```
 
 2. Отправка кода авторизации
@@ -86,7 +86,7 @@ curl -u admin:ваш_пароль -X POST \
 curl -u admin:ваш_пароль -X POST \
   -H "Content-Type: application/json" \
   -d '{"phone": "+79XXXXXXXXX", "code": "12345", "phone_code_hash": "hash_из_предыдущего_ответа"}' \
-  https://tg-api.itpovar.ru/login/verify_code
+  https://tg.platva.ru/login/verify_code
 ```
 
 4. Подтверждение 2FA (если требуется)
@@ -113,12 +113,12 @@ curl -u admin:ваш_пароль -X POST \
   -F "recipient=@username" \
   -F "caption=Мой файл" \
   -F "file=@/path/to/file.jpg" \
-  https://tg-api.itpovar.ru/send/file
+  https://tg.platva.ru/send/file
 ```
 
 ### Получение списка контактов
 ```bash
-curl -u admin:ваш_пароль https://tg-api.itpovar.ru/contacts
+curl -u admin:ваш_пароль https:/tg.platva.ru/contacts
 ```
 
 ## Обновление
