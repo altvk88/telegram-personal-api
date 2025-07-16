@@ -23,4 +23,4 @@ docker-compose down
 docker-compose up -d --build
 
 echo "Обновление завершено!"
-echo "API доступен по адресу: https://tg-api.itpovar.ru"
+echo "API доступен по адресу: https://tg.platva.ru"
