@@ -36,7 +36,7 @@ sudo ./scripts/install.sh
 
 1. Клонируем репозиторий
 ```bash
-git clone [https://github.com/CreatmanCEO/telegram-personal-api.git](https://github.com/altvk88/telegram-personal-api.git)
+git clone https://github.com/altvk88/telegram-personal-api.git
 cd telegram-personal-api
 ```
 
